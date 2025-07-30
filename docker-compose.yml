@@ -1,6 +1,7 @@
 services:
   fhir-server:
     container_name: fhir-server
+    image: tthin09/fhir-server:1.4.1
     build:
       context: ./fhir-server
     ports:
@@ -30,14 +31,10 @@ services:
     volumes:
       # Audit log output folder 
       - "../fhir-server/logs:/app/logs"
-    depends_on:
-      fhir-db:
-        condition: service_healthy
-      id-server:
-        condition: service_started
 
   id-server:
     container_name: id-server
+    image: tthin09/id-server:1.4.1
     build:
       context: ./id-server
     ports:
@@ -62,10 +59,8 @@ services:
       # Change this to your hostname
       KC_HOSTNAME_URL: ${ID_SERVER_HOST}
       KC_HTTPS_PORT: 8443
-    depends_on:
-      id-db:
-        condition: service_healthy
     command: start-dev
+    restart: unless-stopped
     
   fhir-db:
     image: postgres:15.4
@@ -94,11 +89,14 @@ services:
       POSTGRES_PASSWORD: ${ID_DB_PASSWORD}
     volumes:
       - "./volumes/id-db-data:/var/lib/postgresql/data"
+      - "./import:/docker-entrypoint-initdb.d:ro"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${ID_DB_USERNAME} -d postgres"]
-      interval: 5s
+      test: >
+        CMD-SHELL pg_isready -U ${ID_DB_USERNAME} -d postgres &&
+        psql -U ${ID_DB_USERNAME} -d postgres -c "SELECT 1 FROM public.client LIMIT 1;" || exit 1
+      interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 12
 
 volumes:
   fhir-db-data:

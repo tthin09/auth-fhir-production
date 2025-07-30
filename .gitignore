@@ -2,7 +2,8 @@
 *.env
 
 # Volume files
-volumes/fhir-db-data
+volumes/fhir-db-data/
+volumes/id-db-data/
 
 # Log file
 *.log
