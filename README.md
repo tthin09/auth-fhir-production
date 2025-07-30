@@ -16,20 +16,15 @@ ID Server is an AuthN & AuthZ platform that is ready to be embedded into Applica
 
 We have documented everything necessary in the **/docs** folder for using. Therefore, if you have any questions or are looking for how to do anything on the server, please check that folder first. Our documentation including:
 
-## How to install
-1. [How our codebase is distributed](docs/how-to-install/1.%20Codebase%20distribution.md)
-2. [How to run all services at once with Docker compose](docs/how-to-install/1.%20Codebase%20distribution.md)
-3. How to run each server separately and locally
-    1. Run each server locally with Spring Boot launch
-    2. How to connect them with Postgres database
-    3. How to connect them together
+## Quickstart to run services on local
+
 ## How to use
 ### FHIR Server
-1. How to query for FHIR resource with GET/POST/PUT
-2. How to import large resources into FHIR Server
-3. How to enable Audit Log feature in FHIR Server
+1. [How to query for FHIR resource with GET/POST/PUT](docs/how-to-use/fhir-server/1. Query for FHIR resources.md)
+2. [How to import large resources into FHIR Server](docs/how-to-use/fhir-server/2. Import large resources into FHIR Server.md)
+3. [How to enable Audit Log feature in FHIR Server](docs/how-to-use/fhir-server/3. Enable Audit Log in FHIR Server.md)
 ### ID Server
-1. Its main purpose, and what client can do with this server
-2. How to get Access Token with different authentication flows
-3. Setup for other Applications integration
-4. Import large number of accounts into our ID Server
+1. [Its main purpose, and what client can do with this server](docs/how-to-use/id-server/1. ID Server main purpose.md)
+2. [How to get Access Token with different authentication flows](docs/how-to-use/id-server/2. Get Access Token through different authentication flows.md)
+3. [Setup for other Applications integration](docs/how-to-use/id-server/3. Setup for other Applications integration.md)
+4. [Import large number of accounts into our ID Server](docs/how-to-use/id-server/4. Import large account database into ID Server.md)
