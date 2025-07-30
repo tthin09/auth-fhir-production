@@ -1,0 +1,103 @@
+services:
+  fhir-server:
+    container_name: fhir-server
+    image: fhir-server:latest
+    ports:
+      - "8090:8090"
+    environment:
+      SERVER_PORT: 8090
+      # FHIR server settings
+      HAPI_FHIR_VALIDATION_REQUESTS_ENABLED: true
+      HAPI_FHIR_SERVER_VALIDATION_FLAG_FAIL_ON_SEVERITY: error
+      HAPI_FHIR_SERVER_VALIDATION_FLAG_ENFORCE_REQUIREMENT: true
+      HAPI_FHIR_VALIDATION_FETCH_REMOTE_RESOURCES: true
+      HAPI_FHIR_VALIDATION_ALLOW_EXTERNAL_REFERENCES: true
+      HAPI_FHIR_VALIDATION_POLICY: FETCH_REMOTE_RESOURCES
+      # Database connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://fhir-db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: ${FHIR_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${FHIR_DB_PASSWORD}
+      SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 200
+      # Keycloak connection
+      IDENTITY_SERVER_URL: ${ID_INTROSPECTION_ENDPOINT}
+      INTROSPECTION_CLIENT_ID: validation-service
+      INTROSPECTION_CLIENT_SECRET: njCJu4HFSaB15rHCM5OY0llsO3OuHvNv
+      # Audit log
+      AUDIT_LOG_ENABLED: true
+    volumes:
+      # Audit log output folder 
+      - "../fhir-server/logs:/app/logs"
+    depends_on:
+      fhir-db:
+        condition: service_healthy
+      id-server:
+        condition: service_started
+
+  id-server:
+    container_name: id-server
+    image: id-server:latest
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      # Database connection
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://id-db:5432/postgres
+      KC_DB_USERNAME: ${ID_DB_USERNAME}
+      KC_DB_PASSWORD: ${ID_DB_PASSWORD}
+
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_PROXY: edge
+      KC_PROXY_HEADERS: xforwarded
+      KC_SECURE_COOKIES: true
+      KC_HTTP_ONLY_COOKIES: true
+
+      KC_HTTP_ENABLED: true
+      KC_HTTP_PORT: 8080
+      # Change this to your hostname
+      KC_HOSTNAME_URL: ${ID_SERVER_HOST}
+      KC_HTTPS_PORT: 8443
+    depends_on:
+      id-db:
+        condition: service_healthy
+    command: start-dev
+    
+  fhir-db:
+    image: postgres:15.4
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${FHIR_DB_USERNAME}
+      POSTGRES_PASSWORD: ${FHIR_DB_PASSWORD}
+    command: postgres -c max_connections=220
+    volumes:
+      - "./volumes/fhir-db-data:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${FHIR_DB_USERNAME} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  id-db:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${ID_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ID_DB_PASSWORD}
+    volumes:
+      - "./volumes/id-db-data:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${ID_DB_USERNAME} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  fhir-db-data:
+  id-db-data:

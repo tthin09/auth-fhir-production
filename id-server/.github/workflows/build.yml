@@ -1,0 +1,41 @@
+# Workflow name displayed in GitHub Actions UI
+name: CI Build
+
+# Triggers the workflow on every push to any branch
+on:
+  push:
+    branches:
+      - '**' # This means it will run on pushes to all branches
+
+# Define a single job named 'build'
+jobs:
+  build:
+    # Specifies the type of runner to use. 'ubuntu-latest' is a common choice.
+    runs-on: ubuntu-latest
+
+    # Define the steps that the job will execute
+    steps:
+      # Step 1: Checks out your repository code
+      # This action is essential to get your project files onto the runner.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Java Development Kit (JDK)
+      # Assuming 'kc.sh build' might require a specific Java version.
+      # You can change 'adopt' and '17' based on your project's needs.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt' # Or 'temurin', 'oracle', etc.
+          cache: 'maven' # If you're using Maven, this caches dependencies
+
+      # Step 3: Make the script executable
+      # It's good practice to ensure your shell script has execute permissions.
+      - name: Make kc.sh executable
+        run: chmod +x ./bin/kc.sh
+
+      # Step 4: Run the build command
+      # This is the core step that executes your build script.
+      - name: Run project build
+        run: ./bin/kc.sh build
