@@ -1,7 +1,8 @@
 services:
   fhir-server:
     container_name: fhir-server
-    image: fhir-server:latest
+    build:
+      context: ./fhir-server
     ports:
       - "8090:8090"
     environment:
@@ -37,7 +38,8 @@ services:
 
   id-server:
     container_name: id-server
-    image: id-server:latest
+    build:
+      context: ./id-server
     ports:
       - "8080:8080"
       - "8443:8443"

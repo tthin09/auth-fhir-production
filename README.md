@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Introduction
 
 This is a complete FHIR Server designed to store, manage and exchange healthcare data. The server is built based on [HAPI FHIR JPA Server](https://github.com/hapifhir/hapi-fhir-jpaserver-starter)
@@ -26,8 +25,8 @@ git clone --recurse-submodules https://github.com/tthin09/auth-fhir.git
 We have documented everything necessary in the **/docs** folder for using. Therefore, if you have any questions or are looking for how to do anything on the server, please check that folder first. Our documentation including:
 
 ## How to install
-1. How our codebase is distributed
-2. How to run all services at once with Docker compose
+1. [How our codebase is distributed](docs/how-to-install/1.%20Codebase%20distribution.md)
+2. [How to run all services at once with Docker compose](docs/how-to-install/1.%20Codebase%20distribution.md)
 3. How to run each server separately and locally
     1. Run each server locally with Spring Boot launch
     2. How to connect them with Postgres database
@@ -42,6 +41,3 @@ We have documented everything necessary in the **/docs** folder for using. There
 2. How to get Access Token with different authentication flows
 3. Setup for other Applications integration
 4. Import large number of accounts into our ID Server
-=======
-# auth-fhir-production
->>>>>>> eab478e3c3ed89c859e4f2c5990d47da95658dc4
