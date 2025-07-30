@@ -6,3 +6,6 @@ volumes/
 
 # Log file
 *.log
+
+# FHIR Server .class files
+fhir-server/*.class
