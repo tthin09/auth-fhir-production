@@ -8,5 +8,4 @@ volumes/
 *.log
 
 # FHIR Server files
-fhir-server/**/*.class
-fhir-server/**/*.war
+fhir-server/target/
