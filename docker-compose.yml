@@ -30,7 +30,7 @@ services:
       AUDIT_LOG_ENABLED: true
     volumes:
       # Audit log output folder 
-      - "../fhir-server/logs:/app/logs"
+      - "./fhir-server/logs:/app/logs"
 
   id-server:
     container_name: id-server
@@ -89,7 +89,7 @@ services:
       POSTGRES_PASSWORD: ${ID_DB_PASSWORD}
     volumes:
       - "./volumes/id-db-data:/var/lib/postgresql/data"
-      - "./import:/docker-entrypoint-initdb.d:ro"
+      - "./id-server/data/id-dump.sql:/docker-entrypoint-initdb.d/id-dump.sql:ro"
     healthcheck:
       test: >
         CMD-SHELL pg_isready -U ${ID_DB_USERNAME} -d postgres &&

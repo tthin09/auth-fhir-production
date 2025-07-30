@@ -26,7 +26,7 @@ We have documented everything necessary in the **/docs** folder for using. There
 
 ## Quickstart on how to run servers on local
 
-First, create an `.env` file in `root` folder, and pass in `.env` this body below. You can re-configurate the username/password of your own and **change the server host to whatever domain you're hosting on**.
+First, create an `.env` file in `root` folder, and pass in this body below. You can re-configurate the username/password of your own and **change the server host to whatever domain you're hosting on**. You can also leave this as default if you're running on Windows.
 
 ```
 # ID Server connect to database
