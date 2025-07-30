@@ -12,14 +12,6 @@ This FHIR Server is served as a backend platform for other Applications to build
 
 ID Server is an AuthN & AuthZ platform that is ready to be embedded into Applications.
 
-# How to clone
-
-This project have 2 submodules, so we must clone with this command
-
-```
-git clone --recurse-submodules https://github.com/tthin09/auth-fhir.git
-```
-
 # Documentation
 
 We have documented everything necessary in the **/docs** folder for using. Therefore, if you have any questions or are looking for how to do anything on the server, please check that folder first. Our documentation including:
