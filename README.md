@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Introduction
 
 This is a complete FHIR Server designed to store, manage and exchange healthcare data. The server is built based on [HAPI FHIR JPA Server](https://github.com/hapifhir/hapi-fhir-jpaserver-starter)
@@ -41,3 +42,6 @@ We have documented everything necessary in the **/docs** folder for using. There
 2. How to get Access Token with different authentication flows
 3. Setup for other Applications integration
 4. Import large number of accounts into our ID Server
+=======
+# auth-fhir-production
+>>>>>>> eab478e3c3ed89c859e4f2c5990d47da95658dc4
