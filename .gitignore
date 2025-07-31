@@ -1,0 +1,12 @@
+# Env files
+*.env
+
+# Volume files
+volumes/fhir-db-data/
+volumes/id-db-data/
+
+# Log file
+*.log
+
+# FHIR Server files
+fhir-server/target/

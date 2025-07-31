@@ -1,0 +1,24 @@
+{
+  "scopes": [
+    "Medication",
+    "AllergyIntolerance",
+    "CarePlan",
+    "CareTeam",
+    "Condition",
+    "Device",
+    "DiagnosticReport",
+    "DocumentReference",
+    "Encounter",
+    "Goal",
+    "Immunization",
+    "Location",
+    "MedicationRequest",
+    "Observation",
+    "Organization",
+    "Patient",
+    "Practitioner",
+    "Procedure",
+    "Provenance",
+    "PractitionerRole"
+  ]
+}
